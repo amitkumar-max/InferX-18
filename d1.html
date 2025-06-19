@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0600b6 0%, #4e0c79 100%);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .calc {
+            background: #161f16;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            width: 360px;
+        }
+
+        .disp {
+            background: #222;
+            color: #4af72b;
+            font-size: 2em;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: right;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        .btns {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .btn {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.5em;
+            padding: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #ddd;
+        }
+
+        .op {
+            background: #eea804;
+        }
+
+        .eq {
+            background: #fb1818;
+            grid-column: span 2;
+        }
+
+        .eq:hover {
+            background: #ff9e17;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calc">
+        <div class="disp" id="disp">0</div>
+        <div class="btns">
+            <button class="btn op" data-value="AC">AC</button>
+            <button class="btn op" data-value="DEL">DEL</button>
+            <button class="btn op" data-value="%">%</button>
+            <button class="btn op" data-value="/">/</button>
+
+            <button class="btn" data-value="1">1</button>
+            <button class="btn" data-value="2">2</button>
+            <button class="btn" data-value="3">3</button>
+            <button class="btn op" data-value="*">*</button>
+
+            <button class="btn" data-value="4">4</button>
+            <button class="btn" data-value="5">5</button>
+            <button class="btn" data-value="6">6</button>
+            <button class="btn op" data-value="-">-</button>
+
+            <button class="btn" data-value="7">7</button>
+            <button class="btn" data-value="8">8</button>
+            <button class="btn" data-value="9">9</button>
+            <button class="btn op" data-value="+">+</button>
+
+            <button class="btn" data-value="0">0
+            </button>
+        <button class="btn" data-value=".">.
+        </button>
+    <button class="btn eq" data-value="=">=</button>
+        </div>
+        </div>
+        <script>
+            const ds = document.getElementById('disp');
+            const btns = document.querySelectorAll('.btn');
+            let crt = ''; let res = false;
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const x = btn.getAttribute('data-value');
+                    if (x === "AC") { crt = ''; ds.innerText = '0'; }
+                    else if (x === "DEL") { crt = crt.slice(0, -1); ds.innerText = crt || '0'; }
+                    else if (x === "=") { try { crt = eval(crt).toString(); ds.innerText = crt; } catch { ds.innerText = "ERROR"; crt = ''; } }
+                    else { if (res && !isNaN(x)) { crt = x; } else { crt += x; }; ds.innerText = crt; res = false; }
+                });
+            });
+        </script>
+</body>
+
+</html>
